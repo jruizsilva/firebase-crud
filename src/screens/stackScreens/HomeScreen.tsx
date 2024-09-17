@@ -15,11 +15,24 @@ export function HomeScreen({
     setVisible(false)
   }
   return (
-    <RN.View style={{ flexGrow: 1, backgroundColor: '#333' }}>
+    <RN.View style={{ flexGrow: 1 }}>
       <Text>Home Screen</Text>
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal}>
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={{
+            backgroundColor: '#fff',
+            padding: 20,
+            height: '50%',
+            width: '95%',
+            borderRadius: 8,
+            marginHorizontal: 'auto',
+          }}
+        >
+          <Text style={{ color: '#000' }}>
+            Example Modal. Click outside this area to dismiss.
+          </Text>
         </Modal>
       </Portal>
       <Button style={{ marginTop: 30 }} onPress={showModal}>
