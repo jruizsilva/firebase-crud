@@ -3,13 +3,16 @@ import { Navigation } from './src/Navigation'
 import { PaperProvider } from 'react-native-paper'
 import { AppRegistry } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export default function App() {
   return (
-    <PaperProvider>
-      <Navigation />
+    <GestureHandlerRootView>
+      <PaperProvider>
+        <Navigation />
+      </PaperProvider>
       <StatusBar />
-    </PaperProvider>
+    </GestureHandlerRootView>
   )
 }
 AppRegistry.registerComponent('firebase-crud', () => App)

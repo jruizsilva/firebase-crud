@@ -17,6 +17,7 @@ export function HomeScreen({
 
   const handleSnapPress = useCallback((index: number) => {
     sheetRef.current?.snapToIndex(index)
+    sheetRef.current?.expand()
     setIsOpen(true)
   }, [])
 
