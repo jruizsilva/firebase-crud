@@ -1,43 +1,41 @@
 import * as RN from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../Navigation'
-import { Button, Modal, Portal, Text } from 'react-native-paper'
-import { useState } from 'react'
+import { Button, Text } from 'react-native-paper'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import BottomSheet from '@gorhom/bottom-sheet'
+import { BottomSheetView } from '@gorhom/bottom-sheet'
 
 export function HomeScreen({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
-  const [visible, setVisible] = useState(false)
+  const sheetRef = useRef<BottomSheet>(null)
+  const [isOpen, setIsOpen] = useState(true)
 
-  const showModal = () => setVisible(true)
-  const hideModal = () => {
-    setVisible(false)
-  }
+  const snapPoints = useMemo(() => ['25%', '50%'], [])
+
+  const handleSnapPress = useCallback((index: number) => {
+    sheetRef.current?.snapToIndex(index)
+    setIsOpen(true)
+  }, [])
+
   return (
     <RN.View style={{ flexGrow: 1 }}>
       <Text>Home Screen</Text>
-      <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={hideModal}
-          contentContainerStyle={{
-            backgroundColor: '#fff',
-            padding: 20,
-            height: '50%',
-            width: '95%',
-            borderRadius: 8,
-            marginHorizontal: 'auto',
-          }}
-        >
-          <Text style={{ color: '#000' }}>
-            Example Modal. Click outside this area to dismiss.
-          </Text>
-        </Modal>
-      </Portal>
-      <Button style={{ marginTop: 30 }} onPress={showModal}>
+      <Button style={{ marginTop: 30 }} onPress={() => handleSnapPress(0)}>
         Show
       </Button>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        enablePanDownToClose={true}
+        onClose={() => setIsOpen(false)}
+      >
+        <BottomSheetView>
+          <Text>Hello</Text>
+        </BottomSheetView>
+      </BottomSheet>
     </RN.View>
   )
 }
